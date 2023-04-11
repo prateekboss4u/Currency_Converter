@@ -4,7 +4,7 @@ require 'faraday'
 
 class CurrencyConverter
     #FOREX_DATA = { "INR": 1, "GBP": 100.50, "EUR": 89.25, "USD": 81.86, "JPY": 1.62, "CHF": 90.52 }
-    API_KEY = "A4UUB4XKNzVTxcJJYNBENbakxSdsJbvG"
+    API_KEY = "Enter Your API here"
     
     private
     def api_initiation
