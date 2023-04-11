@@ -1,4 +1,4 @@
-require 'net/http'
+#require 'net/http'
 require 'json'
 require 'faraday'
 
@@ -15,9 +15,11 @@ class CurrencyConverter
     end
   
     def initialize
+        @api_data = api_initiation
         @base_currency = validate_user_currency(input_user_base_currency)
         @foreign_currency = validate_user_currency(input_user_foreign_currency)
         @amount = input_user_amount
+
       
         puts convert_currency(@base_currency, @foreign_currency, @amount).to_f
     end
@@ -39,11 +41,11 @@ class CurrencyConverter
   
     def convert_currency(base_currency, foreign_currency, amount)
         if base_currency == 'INR'
-            result = amount * api_initiation['rates'][foreign_currency]
+            result = amount * @api_data['rates'][foreign_currency]
         elsif foreign_currency == 'INR'
-            result = amount / api_initiation['rates'][base_currency]
+            result = amount / @api_data['rates'][base_currency]
         else
-            result = api_initiation['rates'][foreign_currency]/api_initiation['rates'][base_currency] * amount
+            result = @api_data['rates'][foreign_currency]/@api_data['rates'][base_currency] * amount
         end
         result
     end
@@ -51,7 +53,7 @@ class CurrencyConverter
     private
     
     def validate_user_currency(currency)
-        if api_initiation['rates'].key?(currency)
+        if @api_data['rates'].key?(currency)
             currency
         else
             puts "Sorry! We don't support this currency yet." 
